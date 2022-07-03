@@ -2,8 +2,8 @@
   <section class="todoapp">
     <!-- 除了驼峰, 还可以使用-转换链接 -->
     <TodoHeader @create="createFn"></TodoHeader>
-    <TodoMain :list="list" @del="deleteFn"></TodoMain>
-    <TodoFooter :list="list"></TodoFooter>
+    <TodoMain :list="showArr" @del="deleteFn"></TodoMain>
+    <TodoFooter :list="showArr" @changeType="typeFn"></TodoFooter>
   </section>
 </template>
 
@@ -20,6 +20,7 @@ export default {
         { id: 201, name: '睡觉', isDone: false },
         { id: 103, name: '打豆豆', isDone: true },
       ],
+      getSel: 'all',
     }
   },
   methods: {
@@ -36,6 +37,24 @@ export default {
     deleteFn(id) {
       let index = this.list.findIndex((item) => item.id == id)
       this.list.splice(index, 1)
+    },
+    // 全部 未完成 已完成
+    typeFn(val) {
+      this.getSel = val
+    },
+  },
+  //监听
+  computed: {
+    showArr() {
+      if (this.getSel === 'yes') {
+        // 显示已完成
+        return this.list.filter((obj) => obj.isDone === true)
+      } else if (this.getSel === 'no') {
+        // 显示未完成
+        return this.list.filter((obj) => obj.isDone === false)
+      } else {
+        return this.list // 全部显示
+      }
     },
   },
   components: {
