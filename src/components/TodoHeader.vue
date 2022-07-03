@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <h1>todos</h1>
-    <input id="toggle-all" class="toggle-all" type="checkbox" />
+    <input id="toggle-all" class="toggle-all" type="checkbox" v-model="isAll" />
     <label for="toggle-all"></label>
     <!-- label 可以关联一个表单标签 -->
     <input
@@ -16,6 +16,7 @@
 
 <script>
 export default {
+  props: ['list'],
   data() {
     return {
       task: '',
@@ -29,6 +30,19 @@ export default {
       }
       this.$emit('create', this.task)
       this.task = ''
+    },
+  },
+  computed: {
+    isAll: {
+      set(val) {
+        this.list.forEach((obj) => (obj.isDone = val))
+      },
+      get() {
+        return (
+          this.list.length !== 0 &&
+          this.list.every((obj) => obj.isDone === true)
+        )
+      },
     },
   },
 }
