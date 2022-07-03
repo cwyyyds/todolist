@@ -3,7 +3,11 @@
     <!-- 除了驼峰, 还可以使用-转换链接 -->
     <TodoHeader @create="createFn"></TodoHeader>
     <TodoMain :list="showArr" @del="deleteFn"></TodoMain>
-    <TodoFooter :list="showArr" @changeType="typeFn"></TodoFooter>
+    <TodoFooter
+      :list="showArr"
+      @changeType="typeFn"
+      @clear="clearFn"
+    ></TodoFooter>
   </section>
 </template>
 
@@ -41,6 +45,10 @@ export default {
     // 全部 未完成 已完成
     typeFn(val) {
       this.getSel = val
+    },
+    //清除样式
+    clearFn() {
+      this.list = this.list.filter((obj) => obj.isDone == false)
     },
   },
   //监听
