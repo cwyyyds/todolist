@@ -8,7 +8,7 @@
       class="new-todo"
       placeholder="输入任务名称-回车确认"
       autofocus
-      v-mode="task"
+      v-model="task"
       @keydown.enter="downFn"
     />
   </header>
@@ -28,6 +28,7 @@ export default {
         return
       }
       this.$emit('create', this.task)
+      this.task = ''
     },
   },
 }

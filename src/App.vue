@@ -19,7 +19,7 @@ import TodoFooter from './components/TodoFooter'
 export default {
   data() {
     return {
-      list: [
+      list: JSON.parse(localStorage.getItem('todoList')) || [
         { id: 100, name: '吃饭', isDone: true },
         { id: 201, name: '睡觉', isDone: false },
         { id: 103, name: '打豆豆', isDone: true },
@@ -63,6 +63,15 @@ export default {
       } else {
         return this.list // 全部显示
       }
+    },
+  },
+  watch: {
+    list: {
+      deep: true,
+      handler() {
+        localStorage.setItem('todoList', JSON.stringify(this.list))
+      },
+      default: true,
     },
   },
   components: {
